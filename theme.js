@@ -1,0 +1,8 @@
+export const COLORS = {
+  PRIMARY_COLOR: '#626EA6',
+  PRIMARY_TEXT_COLOR: '#ffffff',
+  SECONDARY_COLOR: '#649E23',
+  SECONDARY_TEXT_COLOR: '#ffffff',
+  BACKGROUND_COLOR: '#d8d8d8',
+  FAINT_TEXT: '#808080',
+};
