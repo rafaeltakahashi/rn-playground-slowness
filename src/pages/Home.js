@@ -49,6 +49,42 @@ export default ({navigation}) => (
         }
       />
 
+      <View style={{height: 20}} />
+      <Button
+        title="Wrapped Flat List (10 x 50)"
+        onPress={() => {
+          navigation.navigate('WrappedFlatList', {
+            primarySize: 10,
+            secondarySize: 50,
+          });
+        }}
+      />
+
+      <View style={{height: 20}} />
+      <Button
+        title="Wrapped Flat List (50 x 10)"
+        onPress={() => {
+          navigation.navigate('WrappedFlatList', {
+            primarySize: 50,
+            secondarySize: 10,
+          });
+        }}
+      />
+
+      <View style={{height: 20}} />
+      <Button
+        title="Wrapped Flat List (50 x 50)"
+        onPress={() => {
+          navigation.navigate('WrappedFlatList', {
+            primarySize: 50,
+            secondarySize: 50,
+          });
+        }}
+      />
+
+      <View style={{height: 20}} />
+      <Text>A x B means A lines and B columns.</Text>
+
       <Text
         style={{
           position: 'absolute',

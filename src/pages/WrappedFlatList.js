@@ -1,16 +1,11 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- */
-
 import React, {Component} from 'react';
 import {
   Image,
   FlatList,
-  Text,
   View,
+  Text,
   Dimensions,
+  ScrollView,
   PixelRatio,
 } from 'react-native';
 import RandomImage from '../business/randomImage';
@@ -21,10 +16,7 @@ const pixelWidth = PixelRatio.getPixelSizeForLayoutSize(width);
 const height = Math.floor((width * 9) / 16);
 const pixelHeight = PixelRatio.getPixelSizeForLayoutSize(height);
 
-/**
- * Component for testing lag resulting from too many images
- */
-class NestedFlatList extends Component {
+class WrappedFlatList extends Component {
   constructor(props) {
     super(props);
 
@@ -32,7 +24,7 @@ class NestedFlatList extends Component {
       loadedImages: [],
       erroredImages: 0,
       lastErrorMessage: null,
-      randomSections: null,
+      randomImages: null,
       primarySize: -1,
       secondarySize: -1,
     };
@@ -42,7 +34,7 @@ class NestedFlatList extends Component {
     const primarySize = navigation.getParam('primarySize', 10);
     const secondarySize = navigation.getParam('secondarySize', 5);
     return {
-      title: `Nested Flat List (${primarySize}x${secondarySize})`,
+      title: `Wrapped Flat List (${primarySize}x${secondarySize})`,
     };
   };
 
@@ -54,20 +46,12 @@ class NestedFlatList extends Component {
       primarySize !== state.primarySize ||
       secondarySize !== state.secondarySize
     ) {
-      const randomSections = [];
-      for (let i = 0; i < primarySize; i++) {
-        randomSections.push({
-          title: `Random section ${i + 1}`,
-          data: RandomImage.generateUrlArray(
-            i * secondarySize,
-            secondarySize,
-            pixelHeight,
-            pixelWidth,
-          ),
-        });
+      const randomImages = [];
+      for (let i = 0; i < primarySize * secondarySize; i++) {
+        randomImages.push(RandomImage.generateUrl(i, pixelHeight, pixelWidth));
       }
       return {
-        randomSections,
+        randomImages,
         primarySize,
         secondarySize,
       };
@@ -77,56 +61,42 @@ class NestedFlatList extends Component {
   }
 
   render() {
-    const {randomSections} = this.state;
+    const {randomImages, secondarySize} = this.state;
     return (
       <PageContainer>
-        {randomSections && (
-          <FlatList
-            data={randomSections}
-            keyExtractor={randomSection => randomSection.title}
-            renderItem={({item}) => (
-              <View>
-                <Text style={{fontWeight: 'bold', paddingLeft: 10}}>
-                  {item.title}
-                </Text>
-                <FlatList
-                  horizontal
-                  data={item.data}
-                  keyExtractor={item => item}
-                  snapToAlignment="center"
-                  pagingEnabled
-                  showsHorizontalScrollIndicator
-                  renderItem={({item}) => (
-                    <Image
-                      source={{uri: item}}
-                      style={{height, width}}
-                      progressiveRenderingEnabled
-                      onLoad={() => {
-                        if (
-                          this.state.loadedImages.findIndex(
-                            it => it.localeCompare(item) === 0,
-                          ) === -1
-                        ) {
-                          this.setState({
-                            loadedImages: this.state.loadedImages.concat([
-                              item,
-                            ]),
-                          });
-                        }
-                      }}
-                      onError={e => {
-                        this.setState({
-                          erroredImages: this.state.erroredImages + 1,
-                          lastErrorMessage: e.nativeEvent.error,
-                        });
-                      }}
-                    />
-                  )}
+        <ScrollView horizontal>
+          {randomImages && (
+            <FlatList
+              data={randomImages}
+              numColumns={secondarySize}
+              keyExtractor={randomItem => randomItem}
+              renderItem={({item}) => (
+                <Image
+                  source={{uri: item}}
+                  style={{height, width}}
+                  progressiveRenderingEnabled
+                  onLoad={() => {
+                    if (
+                      this.state.loadedImages.findIndex(
+                        it => it.localeCompare(item) === 0,
+                      ) === -1
+                    ) {
+                      this.setState({
+                        loadedImages: this.state.loadedImages.concat([item]),
+                      });
+                    }
+                  }}
+                  onError={e => {
+                    this.setState({
+                      erroredImages: this.state.erroredImages + 1,
+                      lastErrorMessage: e.nativeEvent.error,
+                    });
+                  }}
                 />
-              </View>
-            )}
-          />
-        )}
+              )}
+            />
+          )}
+        </ScrollView>
         {this.state.lastErrorMessage && (
           <View
             style={{
@@ -167,4 +137,4 @@ class NestedFlatList extends Component {
     );
   }
 }
-export default NestedFlatList;
+export default WrappedFlatList;
