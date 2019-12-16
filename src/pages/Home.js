@@ -51,6 +51,17 @@ export default ({navigation}) => (
 
       <View style={{height: 20}} />
       <Button
+        title="Nested Flat List (text only) (50 x 50)"
+        onPress={() =>
+          navigation.navigate('NestedFlatListText', {
+            primarySize: 50,
+            secondarySize: 50,
+          })
+        }
+      />
+
+      <View style={{height: 20}} />
+      <Button
         title="Wrapped Flat List (10 x 50)"
         onPress={() => {
           navigation.navigate('WrappedFlatList', {

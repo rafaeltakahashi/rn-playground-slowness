@@ -1,6 +1,7 @@
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import NestedFlatList from './pages/NestedFlatList';
+import NestedFlatListText from './pages/NestedFlatListText';
 import WrappedFlatList from './pages/WrappedFlatList';
 import Home from './pages/Home';
 import {COLORS} from '../theme';
@@ -15,6 +16,9 @@ const AppNavigator = createStackNavigator(
     },
     NestedFlatList: {
       screen: NestedFlatList,
+    },
+    NestedFlatListText: {
+      screen: NestedFlatListText,
     },
     WrappedFlatList: {
       screen: WrappedFlatList,
