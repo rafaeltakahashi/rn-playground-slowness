@@ -55,14 +55,15 @@ class NestedFlatList extends Component {
       secondarySize !== state.secondarySize
     ) {
       const randomSections = [];
+      const imageSizeMultiplier = navigation.getParam('imageSizeMultiplier', 1);
       for (let i = 0; i < primarySize; i++) {
         randomSections.push({
           title: `Random section ${i + 1}`,
           data: RandomImage.generateUrlArray(
             i * secondarySize,
             secondarySize,
-            pixelHeight,
-            pixelWidth,
+            pixelHeight * imageSizeMultiplier,
+            pixelWidth * imageSizeMultiplier,
           ),
         });
       }

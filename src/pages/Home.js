@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Button, Image} from 'react-native';
-import PageContainer from '../components/PageContainer';
+import {Button, Image, Text, View} from 'react-native';
 import {COLORS} from '../../theme';
+import PageContainer from '../components/PageContainer';
 
 export default ({navigation}) => (
   <PageContainer padded>
@@ -56,6 +56,18 @@ export default ({navigation}) => (
           navigation.navigate('NestedFlatListText', {
             primarySize: 50,
             secondarySize: 50,
+          })
+        }
+      />
+
+      <View style={{height: 20}} />
+      <Button
+        title="Nested Flat List (1/4 size images) (50 x 50)"
+        onPress={() =>
+          navigation.navigate('NestedFlatList', {
+            primarySize: 50,
+            secondarySize: 50,
+            imageSizeMultipler: 0.5, // half length = one-quarter the area
           })
         }
       />
