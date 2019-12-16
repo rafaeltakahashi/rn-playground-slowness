@@ -60,6 +60,31 @@ class WrappedFlatList extends Component {
     }
   }
 
+  renderImage = ({item}) => (
+    <Image
+      source={{uri: item}}
+      style={{height, width}}
+      progressiveRenderingEnabled
+      onLoad={() => {
+        if (
+          this.state.loadedImages.findIndex(
+            it => it.localeCompare(item) === 0,
+          ) === -1
+        ) {
+          this.setState({
+            loadedImages: this.state.loadedImages.concat([item]),
+          });
+        }
+      }}
+      onError={e => {
+        this.setState({
+          erroredImages: this.state.erroredImages + 1,
+          lastErrorMessage: e.nativeEvent.error,
+        });
+      }}
+    />
+  )
+
   render() {
     const {randomImages, secondarySize} = this.state;
     return (
@@ -70,30 +95,7 @@ class WrappedFlatList extends Component {
               data={randomImages}
               numColumns={secondarySize}
               keyExtractor={randomItem => randomItem}
-              renderItem={({item}) => (
-                <Image
-                  source={{uri: item}}
-                  style={{height, width}}
-                  progressiveRenderingEnabled
-                  onLoad={() => {
-                    if (
-                      this.state.loadedImages.findIndex(
-                        it => it.localeCompare(item) === 0,
-                      ) === -1
-                    ) {
-                      this.setState({
-                        loadedImages: this.state.loadedImages.concat([item]),
-                      });
-                    }
-                  }}
-                  onError={e => {
-                    this.setState({
-                      erroredImages: this.state.erroredImages + 1,
-                      lastErrorMessage: e.nativeEvent.error,
-                    });
-                  }}
-                />
-              )}
+              renderItem={this.renderImage}
             />
           )}
         </ScrollView>

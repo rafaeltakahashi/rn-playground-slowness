@@ -76,6 +76,51 @@ class NestedFlatList extends Component {
     }
   }
 
+  renderInnerFlatList = ({item}) => (
+    <View>
+      <Text style={{fontWeight: 'bold', paddingLeft: 10}}>{item.title}</Text>
+      <FlatList
+        horizontal
+        data={item.data}
+        keyExtractor={item => item}
+        snapToAlignment="center"
+        getItemLayout={(data, index) => ({
+          length: width,
+          offset: width * index,
+          index,
+        })}
+        pagingEnabled
+        showsHorizontalScrollIndicator
+        renderItem={this.renderImageCard}
+      />
+    </View>
+  );
+
+  renderImageCard = ({item}) => (
+    <Image
+      source={{uri: item}}
+      style={{height, width}}
+      progressiveRenderingEnabled
+      onLoad={() => {
+        if (
+          this.state.loadedImages.findIndex(
+            it => it.localeCompare(item) === 0,
+          ) === -1
+        ) {
+          this.setState({
+            loadedImages: this.state.loadedImages.concat([item]),
+          });
+        }
+      }}
+      onError={e => {
+        this.setState({
+          erroredImages: this.state.erroredImages + 1,
+          lastErrorMessage: e.nativeEvent.error,
+        });
+      }}
+    />
+  );
+
   render() {
     const {randomSections} = this.state;
     return (
@@ -84,47 +129,12 @@ class NestedFlatList extends Component {
           <FlatList
             data={randomSections}
             keyExtractor={randomSection => randomSection.title}
-            renderItem={({item}) => (
-              <View>
-                <Text style={{fontWeight: 'bold', paddingLeft: 10}}>
-                  {item.title}
-                </Text>
-                <FlatList
-                  horizontal
-                  data={item.data}
-                  keyExtractor={item => item}
-                  snapToAlignment="center"
-                  pagingEnabled
-                  showsHorizontalScrollIndicator
-                  renderItem={({item}) => (
-                    <Image
-                      source={{uri: item}}
-                      style={{height, width}}
-                      progressiveRenderingEnabled
-                      onLoad={() => {
-                        if (
-                          this.state.loadedImages.findIndex(
-                            it => it.localeCompare(item) === 0,
-                          ) === -1
-                        ) {
-                          this.setState({
-                            loadedImages: this.state.loadedImages.concat([
-                              item,
-                            ]),
-                          });
-                        }
-                      }}
-                      onError={e => {
-                        this.setState({
-                          erroredImages: this.state.erroredImages + 1,
-                          lastErrorMessage: e.nativeEvent.error,
-                        });
-                      }}
-                    />
-                  )}
-                />
-              </View>
-            )}
+            getItemLayout={(data, index) => ({
+              length: height + 20,
+              offset: (height + 20) * index,
+              index,
+            })}
+            renderItem={this.renderInnerFlatList}
           />
         )}
         {this.state.lastErrorMessage && (
