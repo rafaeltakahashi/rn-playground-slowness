@@ -60,6 +60,7 @@ class HomeScreen extends Component {
               {key: 2, label: '100% larger than full size (4x area)'},
               {key: 1.5, label: '50% larger than full size (2.25x area)'},
               {key: 1, label: 'Full size images'},
+              {key: 0.75, label: 'Three-quarter size images (around 56% area)'},
               {key: 0.5, label: 'Half size images (1/4 area)'},
               {key: 0.33, label: 'One third size images (1/9 area)'},
               {key: 0, label: 'Text only'},
@@ -117,6 +118,7 @@ class HomeScreen extends Component {
               {key: 2, label: '100% larger than full size (4x area)'},
               {key: 1.5, label: '50% larger than full size (2.25x area)'},
               {key: 1, label: 'Full size images'},
+              {key: 0.75, label: 'Three-quarter size images (around 56% area)'},
               {key: 0.5, label: 'Half size images (1/4 area)'},
               {key: 0.33, label: 'One third size images (1/9 area)'},
             ]}
