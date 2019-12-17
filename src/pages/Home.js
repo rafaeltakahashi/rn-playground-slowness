@@ -118,8 +118,8 @@ class HomeScreen extends Component {
           />
           <ModalSelector
             data={[
-              {key: 2, label: '100% larger than full size (4x area)'},
-              {key: 1.5, label: '50% larger than full size (2.25x area)'},
+              {key: 2, label: '100% larger (4x area)'},
+              {key: 1.5, label: '50% larger (2.25x area)'},
               {key: 1, label: 'Full size images'},
               {key: 0.75, label: 'Three-quarter size images (around 56% area)'},
               {key: 0.5, label: 'Half size images (1/4 area)'},
@@ -165,8 +165,8 @@ class HomeScreen extends Component {
           />
           <ModalSelector
             data={[
-              {key: 2, label: '100% larger than full size (4x area)'},
-              {key: 1.5, label: '50% larger than full size (2.25x area)'},
+              {key: 2, label: '100% larger (4x area)'},
+              {key: 1.5, label: '50% larger (2.25x area)'},
               {key: 1, label: 'Full size images'},
               {key: 0.75, label: 'Three-quarter size images (around 56% area)'},
               {key: 0.5, label: 'Half size images (1/4 area)'},
@@ -191,11 +191,7 @@ class HomeScreen extends Component {
         </ScrollView>
         <Text
           style={{
-            position: 'absolute',
-            bottom: 5,
-            left: 5,
-            right: 5,
-            fontSize: 10,
+            margin: 5,
             textAlign: 'center',
             color: COLORS.FAINT_TEXT,
           }}>
