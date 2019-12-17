@@ -62,8 +62,8 @@ class NestedFlatList extends Component {
           data: RandomImage.generateUrlArray(
             i * secondarySize,
             secondarySize,
-            pixelHeight * imageSizeMultiplier,
-            pixelWidth * imageSizeMultiplier,
+            Math.floor(pixelHeight * imageSizeMultiplier),
+            Math.floor(pixelWidth * imageSizeMultiplier),
           ),
         });
       }
@@ -124,6 +124,10 @@ class NestedFlatList extends Component {
 
   render() {
     const {randomSections} = this.state;
+    const imageSizeMultiplier = this.props.navigation.getParam(
+      'imageSizeMultiplier',
+      1,
+    );
     return (
       <PageContainer>
         {randomSections && (
@@ -165,7 +169,8 @@ class NestedFlatList extends Component {
             borderRadius: 10,
           }}>
           <Text style={{color: 'white'}}>
-            Using images of size {pixelWidth} by {pixelHeight}
+            Using images of size {Math.floor(pixelWidth * imageSizeMultiplier)}{' '}
+            by {Math.floor(pixelHeight * imageSizeMultiplier)}
           </Text>
           <Text style={{color: 'white'}}>
             Loaded images: {this.state.loadedImages.length}

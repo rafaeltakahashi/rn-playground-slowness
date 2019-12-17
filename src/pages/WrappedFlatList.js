@@ -47,8 +47,15 @@ class WrappedFlatList extends Component {
       secondarySize !== state.secondarySize
     ) {
       const randomImages = [];
+      const imageSizeMultiplier = navigation.getParam('imageSizeMultiplier', 1);
       for (let i = 0; i < primarySize * secondarySize; i++) {
-        randomImages.push(RandomImage.generateUrl(i, pixelHeight, pixelWidth));
+        randomImages.push(
+          RandomImage.generateUrl(
+            i,
+            Math.floor(pixelHeight * imageSizeMultiplier),
+            Math.floor(pixelWidth * imageSizeMultiplier),
+          ),
+        );
       }
       return {
         randomImages,
@@ -83,10 +90,14 @@ class WrappedFlatList extends Component {
         });
       }}
     />
-  )
+  );
 
   render() {
     const {randomImages, secondarySize} = this.state;
+    const imageSizeMultiplier = this.props.navigation.getParam(
+      'imageSizeMultiplier',
+      1,
+    );
     return (
       <PageContainer>
         <ScrollView horizontal>
@@ -126,7 +137,8 @@ class WrappedFlatList extends Component {
             borderRadius: 10,
           }}>
           <Text style={{color: 'white'}}>
-            Using images of size {pixelWidth} by {pixelHeight}
+            Using images of size {Math.floor(pixelWidth * imageSizeMultiplier)}{' '}
+            by {Math.floor(pixelHeight * imageSizeMultiplier)}
           </Text>
           <Text style={{color: 'white'}}>
             Loaded images: {this.state.loadedImages.length}
