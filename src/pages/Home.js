@@ -184,7 +184,7 @@ class HomeScreen extends Component {
               this.props.navigation.navigate('ScrollFlatList', {
                 primarySize: this.state.scrollFlatListLines,
                 secondarySize: this.state.scrollFlatListColumns,
-                imageSizeMultipler: this.state.scrollFlatListImageSize,
+                imageSizeMultiplier: this.state.scrollFlatListImageSize,
               });
             }}
           />

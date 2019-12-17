@@ -43,7 +43,7 @@ class NestedFlatList extends Component {
     const primarySize = navigation.getParam('primarySize', 10);
     const secondarySize = navigation.getParam('secondarySize', 5);
     return {
-      title: `Nested Flat List (${primarySize}x${secondarySize})`,
+      title: `Scroll Flat List (${primarySize}x${secondarySize})`,
     };
   };
 
