@@ -15,6 +15,9 @@ class HomeScreen extends Component {
       wrappedFlatListLines: 10,
       wrappedFlatListColumns: 10,
       wrappedFlatListImageSize: 1,
+      scrollFlatListLines: 10,
+      scrollFlatListColumns: 10,
+      scrollFlatListImageSize: 1,
     };
   }
   render() {
@@ -135,6 +138,53 @@ class HomeScreen extends Component {
                 primarySize: this.state.wrappedFlatListLines,
                 secondarySize: this.state.wrappedFlatListColumns,
                 imageSizeMultipler: this.state.wrappedFlatListImageSize,
+              });
+            }}
+          />
+
+          <Text style={{fontWeight: 'bold'}}>ScrollView with Flat Lists</Text>
+          <Text>Lines: {this.state.scrollFlatListLines}</Text>
+          <Slider
+            style={{width: 100}}
+            value={this.state.scrollFlatListLines}
+            minimumValue={10}
+            maximumValue={50}
+            step={1}
+            onValueChange={value => this.setState({scrollFlatListLines: value})}
+          />
+          <Text>Columns: {this.state.scrollFlatListColumns}</Text>
+          <Slider
+            style={{width: 100}}
+            value={this.state.scrollFlatListColumns}
+            minimumValue={10}
+            maximumValue={50}
+            step={1}
+            onValueChange={value =>
+              this.setState({scrollFlatListColumns: value})
+            }
+          />
+          <ModalSelector
+            data={[
+              {key: 2, label: '100% larger than full size (4x area)'},
+              {key: 1.5, label: '50% larger than full size (2.25x area)'},
+              {key: 1, label: 'Full size images'},
+              {key: 0.75, label: 'Three-quarter size images (around 56% area)'},
+              {key: 0.5, label: 'Half size images (1/4 area)'},
+              {key: 0.33, label: 'One third size images (1/9 area)'},
+            ]}
+            style={{marginBottom: 10}}
+            initValue="Full size"
+            onChange={option =>
+              this.setState({scrollFlatListImageSize: option.key})
+            }
+          />
+          <Button
+            title="Open Scroll Flat List →"
+            onPress={() => {
+              this.props.navigation.navigate('ScrollFlatList', {
+                primarySize: this.state.scrollFlatListLines,
+                secondarySize: this.state.scrollFlatListColumns,
+                imageSizeMultipler: this.state.scrollFlatListImageSize,
               });
             }}
           />
