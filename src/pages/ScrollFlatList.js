@@ -78,11 +78,12 @@ class NestedFlatList extends Component {
     }
   }
 
-  renderInnerFlatList = item => (
+  renderInnerFlatList = (item, index) => (
     <View>
       <Text style={{fontWeight: 'bold', paddingLeft: 10}}>{item.title}</Text>
       <FlatList
         horizontal
+        key={`${index}`}
         data={item.data}
         keyExtractor={item => item}
         snapToAlignment="center"
@@ -132,8 +133,8 @@ class NestedFlatList extends Component {
     return (
       <PageContainer>
         <ScrollView>
-          {randomSections.map(randomSection =>
-            this.renderInnerFlatList(randomSection),
+          {randomSections.map((randomSection, index) =>
+            this.renderInnerFlatList(randomSection, index),
           )}
         </ScrollView>
         {this.state.lastErrorMessage && (
