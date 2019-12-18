@@ -79,7 +79,7 @@ class HomeScreen extends Component {
             title="Open Nested Flat List →"
             onPress={() => {
               this.props.navigation.navigate(
-                this.state.wrappedFlatListImageSize === 0
+                this.state.nestedFlatListImageSize === 0
                   ? 'NestedFlatListText'
                   : 'NestedFlatList',
                 {
@@ -137,7 +137,7 @@ class HomeScreen extends Component {
               this.props.navigation.navigate('WrappedFlatList', {
                 primarySize: this.state.wrappedFlatListLines,
                 secondarySize: this.state.wrappedFlatListColumns,
-                imageSizeMultipler: this.state.wrappedFlatListImageSize,
+                imageSizeMultiplier: this.state.wrappedFlatListImageSize,
               });
             }}
           />
