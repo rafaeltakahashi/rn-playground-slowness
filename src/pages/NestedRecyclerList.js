@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Image, Text, View, Dimensions, PixelRatio} from 'react-native';
+import {Text, View, Dimensions, PixelRatio} from 'react-native';
 import RandomImage from '../business/randomImage';
 import PageContainer from '../components/PageContainer';
 import {RecyclerListView, DataProvider, LayoutProvider} from 'recyclerlistview';
+import RecyclerLane from '../components/RecyclerLane';
 
 const width = Dimensions.get('window').width;
 const pixelWidth = PixelRatio.getPixelSizeForLayoutSize(width);
@@ -71,41 +72,38 @@ class NestedRecyclerList extends Component {
   renderSection = (type, item) => (
     <View>
       <Text style={{fontWeight: 'bold', paddingLeft: 10}}>{item.title}</Text>
-      {/** Placeholder */}
-      <View style={{height, backgroundColor: '#e8e8e8', width: '100%'}} />
-    </View>
-  );
-
-  renderImage = (type, item) => (
-    <Image
-      source={{uri: item}}
-      style={{height, width}}
-      progressiveRenderingEnabled
-      onLoad={() => {
-        if (
-          this.state.loadedImages.findIndex(
-            it => it.localeCompare(item) === 0,
-          ) === -1
-        ) {
+      <RecyclerLane
+        data={item.data}
+        onImageLoad={event => {
+          if (
+            this.state.loadedImages.findIndex(
+              it => it.localeCompare(event.nativeEvent.source.url) === 0,
+            ) === -1
+          ) {
+            this.setState({
+              loadedImages: this.state.loadedImages.concat([
+                event.nativeEvent.source.url,
+              ]),
+            });
+          }
+        }}
+        onImageError={e => {
           this.setState({
-            loadedImages: this.state.loadedImages.concat([item]),
+            erroredImages: this.state.erroredImages + 1,
+            lastErrorMessage: e.nativeEvent.error,
           });
-        }
-      }}
-      onError={e => {
-        this.setState({
-          erroredImages: this.state.erroredImages + 1,
-          lastErrorMessage: e.nativeEvent.error,
-        });
-      }}
-    />
+        }}
+      />
+    </View>
   );
 
   recyclerLayoutProvider = new LayoutProvider(
     index => {
+      // all items have the same type
       return 1;
     },
     (type, dim) => {
+      // size of an image, plus some height for the title
       dim.height = height + 20;
       dim.width = width;
     },
@@ -124,6 +122,7 @@ class NestedRecyclerList extends Component {
             rowRenderer={this.renderSection}
             dataProvider={recyclerDataProvider}
             layoutProvider={this.recyclerLayoutProvider}
+            renderAheadOffset={height} // render one lane ahead
           />
         )}
         {this.state.lastErrorMessage && (
