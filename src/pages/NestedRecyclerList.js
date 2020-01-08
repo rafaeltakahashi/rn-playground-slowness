@@ -73,6 +73,7 @@ class NestedRecyclerList extends Component {
     <View>
       <Text style={{fontWeight: 'bold', paddingLeft: 10}}>{item.title}</Text>
       <RecyclerLane
+        laneId={item.title}
         data={item.data}
         onImageLoad={event => {
           if (
@@ -122,7 +123,7 @@ class NestedRecyclerList extends Component {
             rowRenderer={this.renderSection}
             dataProvider={recyclerDataProvider}
             layoutProvider={this.recyclerLayoutProvider}
-            renderAheadOffset={height} // render one lane ahead
+            renderAheadOffset={height * 3} // render three lanes ahead
           />
         )}
         {this.state.lastErrorMessage && (

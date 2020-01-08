@@ -16,10 +16,26 @@ class RecyclerLane extends Component {
     super(props);
 
     this.state = {
+      // keep the title just for getDerivedStateFromProps
+      laneId: props.laneId,
       recyclerDataProvider: new DataProvider((r1, r2) => {
         // items are strings
         return r1 !== r2;
       }).cloneWithRows(props.data),
+    };
+  }
+
+  // Having this method is important, because views are recycled with new
+  // props but the constructor isn't called again.
+  static getDerivedStateFromProps(props, state) {
+    if (state.laneId === props.laneId) {
+      return null;
+    }
+    return {
+      laneId: props.laneId,
+      recyclerDataProvider: state.recyclerDataProvider.cloneWithRows(
+        props.data,
+      ),
     };
   }
 
