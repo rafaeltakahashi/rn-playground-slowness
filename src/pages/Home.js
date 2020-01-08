@@ -18,6 +18,9 @@ class HomeScreen extends Component {
       scrollFlatListLines: 10,
       scrollFlatListColumns: 10,
       scrollFlatListImageSize: 1,
+      nestedRecyclerListLines: 10,
+      nestedRecyclerListColumns: 10,
+      nestedRecyclerListImageSize: 1,
     };
   }
   render() {
@@ -185,6 +188,55 @@ class HomeScreen extends Component {
                 primarySize: this.state.scrollFlatListLines,
                 secondarySize: this.state.scrollFlatListColumns,
                 imageSizeMultiplier: this.state.scrollFlatListImageSize,
+              });
+            }}
+          />
+
+          <Text style={{fontWeight: 'bold'}}>Nested Recycler Lists</Text>
+          <Text>Lines: {this.state.nestedRecyclerListLines}</Text>
+          <Slider
+            style={{width: 100}}
+            value={this.state.nestedRecyclerListLines}
+            minimumValue={10}
+            maximumValue={50}
+            step={1}
+            onValueChange={value =>
+              this.setState({nestedRecyclerListLines: value})
+            }
+          />
+          <Text>Columns: {this.state.nestedRecyclerListColumns}</Text>
+          <Slider
+            style={{width: 100}}
+            value={this.state.nestedRecyclerListColumns}
+            minimumValue={10}
+            maximumValue={50}
+            step={1}
+            onValueChange={value =>
+              this.setState({nestedRecyclerListColumns: value})
+            }
+          />
+          <ModalSelector
+            data={[
+              {key: 2, label: '100% larger (4x area)'},
+              {key: 1.5, label: '50% larger (2.25x area)'},
+              {key: 1, label: 'Full size images'},
+              {key: 0.75, label: 'Three-quarter size images (around 56% area)'},
+              {key: 0.5, label: 'Half size images (1/4 area)'},
+              {key: 0.33, label: 'One third size images (1/9 area)'},
+            ]}
+            style={{marginBottom: 10}}
+            initValue="Full size"
+            onChange={option =>
+              this.setState({nestedRecyclerListImageSize: option.key})
+            }
+          />
+          <Button
+            title="Open Nested Recycler Lists →"
+            onPress={() => {
+              this.props.navigation.navigate('NestedRecyclerList', {
+                primarySize: this.state.nestedRecyclerListLines,
+                secondarySize: this.state.nestedRecyclerListColumns,
+                imageSizeMultiplier: this.state.nestedRecyclerListImageSize,
               });
             }}
           />

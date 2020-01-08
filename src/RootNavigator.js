@@ -4,6 +4,7 @@ import NestedFlatList from './pages/NestedFlatList';
 import NestedFlatListText from './pages/NestedFlatListText';
 import WrappedFlatList from './pages/WrappedFlatList';
 import ScrollFlatList from './pages/ScrollFlatList';
+import NestedRecyclerList from './pages/NestedRecyclerList';
 import Home from './pages/Home';
 import {COLORS} from '../theme';
 
@@ -26,6 +27,9 @@ const AppNavigator = createStackNavigator(
     },
     ScrollFlatList: {
       screen: ScrollFlatList,
+    },
+    NestedRecyclerList: {
+      screen: NestedRecyclerList,
     },
   },
   {
